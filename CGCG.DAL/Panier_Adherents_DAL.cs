@@ -15,35 +15,20 @@ namespace CGCG.DAL
 
         public int id_panier_global { get; set; }
 
+        public int semaine { get; set; }
 
-        public Panier_Adherents_DAL(int ID_Adherents, int ID_Panier_Global)
+
+        public Panier_Adherents_DAL(int ID_Adherents, int ID_Panier_Global, int Semaine)
         {
             id_adherents = ID_Adherents;
             id_panier_global = ID_Panier_Global;
+            semaine = Semaine;
         }
 
-        public Panier_Adherents_DAL(int ID, int ID_Adherents, int ID_Panier_Global)
-            : this(ID_Adherents, ID_Panier_Global)
+        public Panier_Adherents_DAL(int ID, int ID_Adherents, int ID_Panier_Global, int Semaine)
+            : this(ID_Adherents, ID_Panier_Global, Semaine)
         {
             id = ID;
-        }
-
-        public void Insert(SqlConnection connexion)
-        {
-
-            connexion.Open();
-
-            using (var commande = new SqlCommand())
-            {
-                commande.Connection = connexion;
-
-                commande.CommandText = "insert into panier_adherents (id_adherents, id_panier_global)";
-                commande.Parameters.Add(new SqlParameter("@ID_ADHERENT", id_adherents));
-                commande.Parameters.Add(new SqlParameter("@ID_PANIER_GLOBAL", id_panier_global));
-                commande.ExecuteNonQuery();
-
-            }
-
         }
     }
 }

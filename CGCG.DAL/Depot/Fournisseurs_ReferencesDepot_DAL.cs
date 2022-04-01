@@ -69,5 +69,40 @@ namespace CGCG.DAL
         }
         #endregion
 
+        #region DeleteById
+        public void DeleteById(int id)
+        {
+            CreerConnexionEtCommande();
+
+            commande.CommandText = "delete from fournisseurs_references where id_fournisseurs=@ID";
+            commande.Parameters.Add(new SqlParameter("@ID", id));
+
+            DetruireConnexionEtCommande();
+
+        }
+        #endregion
+        public List<Fournisseurs_References_DAL> GetByIDFournisseur(int ID)
+        {
+            CreerConnexionEtCommande();
+
+            commande.CommandText = "select * from fournisseurs_references where id_fournisseurs=@ID";
+            commande.Parameters.Add(new SqlParameter("@ID", ID));
+            var reader = commande.ExecuteReader();
+
+            var listeReferenceDetail = new List<Fournisseurs_References_DAL>();
+
+            while (reader.Read())
+            {
+                var referenceDetailTmp = new Fournisseurs_References_DAL(
+                                        reader.GetInt32(0),
+                                        reader.GetInt32(1)
+                                        );
+
+                listeReferenceDetail.Add(referenceDetailTmp);
+            }
+            DetruireConnexionEtCommande();
+
+            return listeReferenceDetail;
+        }
     }
 }
